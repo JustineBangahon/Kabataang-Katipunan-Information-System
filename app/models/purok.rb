@@ -1,0 +1,2 @@
+class Purok < ApplicationRecord
+end

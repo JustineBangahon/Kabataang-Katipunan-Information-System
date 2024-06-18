@@ -1,0 +1,301 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/dashboard">KKRIS</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "KK Members", kkmembers_path, class: "nav-link" %>
+          </li>
+        </ul>
+      </div>
+    </nav>  
+<div class="container custom-font">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mt-4">
+        <div class="card-body">
+
+          <h1 class="card-title mb-5 text-center">Edit KK Member</h1>
+
+          <%= form_with(model: @kkmember, url: update_kkmember_path(@kkmember),
+          method: :patch) do |form| %>
+          <!-- Personal Information -->
+          <div class="mb-4">
+            <h3 class="text-primary">Personal Information</h3>
+            <div class="form-group">
+              <%= form.hidden_field :id %>
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_lastname">Last Name:</label>
+              <%= personalinfo_fields.text_field :lastname, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_firstname">First Name:</label>
+              <%= personalinfo_fields.text_field :firstname, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_middlename">Middle Name:</label>
+              <%= personalinfo_fields.text_field :middlename, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_age">Age:</label>
+              <%= personalinfo_fields.number_field :age, class: "form-control"
+              %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_sex">Sex:</label>
+              <%= personalinfo_fields.text_field :sex, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_birthdate">Birth Date:</label>
+              <%= personalinfo_fields.date_field :birthdate, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_civilstatus">Civil Status:</label>
+              <%= personalinfo_fields.text_field :civilstatus, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_contactno">Contact Number:</label>
+              <%= personalinfo_fields.number_field :contactno, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_emailaddress">Email Address:</label>
+              <%= personalinfo_fields.email_field :emailaddress, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+                <label for="kkmember_purok">Purok:</label>
+                <%= personalinfo_fields.collection_select :purok, Purok.all, :purokname, :purokname, { include_blank: "-- Select Purok --" }, { class: "form-control" } %>
+                <% # Display a dropdown to select the Purok value from Purok model %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_address">Address:</label>
+              <%= personalinfo_fields.text_area :address, class: "form-control",
+              rows: 3 %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_nationality">Nationality:</label>
+              <%= personalinfo_fields.text_field :nationality, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+                <label for="kkmember_registeredvoter">Registered Voter:</label>
+                <%= personalinfo_fields.select :registeredvoter,
+                  options_for_select(["Yes", "No"], @kkmember.personalinfo.registeredvoter),
+                  {}, class: "form-control" %>
+              <% end %>
+            </div>
+
+            <div class="form-group">
+              <%= form.fields_for :personalinfo do |personalinfo_fields| %>
+              <label for="kkmember_organization">Organization:</label>
+              <%= personalinfo_fields.text_field :organization, class:
+              "form-control" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-primary">Educational Background</h3>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_hea">Highest Educational Attainment:</label>
+              <%= educationbg_fields.text_field :hea, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_elementary">Elementary:</label>
+              <%= educationbg_fields.text_field :elementary, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_highschool">High School:</label>
+              <%= educationbg_fields.text_field :highschool, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_college">College:</label>
+              <%= educationbg_fields.text_field :college, class: "form-control"
+              %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_course">Course:</label>
+              <%= educationbg_fields.text_field :course, class: "form-control"
+              %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_educationstatus">Education Status:</label>
+              <%= educationbg_fields.text_field :educationstatus, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :educationbg do |educationbg_fields| %>
+              <label for="kkmember_ifoutofschool">If Out of School (Please
+                indicate the reason):</label>
+              <%= educationbg_fields.text_area :ifoutofschool, class:
+              "form-control", rows: 3 %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-primary">Work Background</h3>
+            <div class="form-group">
+              <%= form.fields_for :workbg do |workbg_fields| %>
+              <label for="kkmember_work">Work:</label>
+              <%= workbg_fields.text_field :work, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :workbg do |workbg_fields| %>
+              <label for="kkmember_agency">Agency:</label>
+              <%= workbg_fields.text_field :agency, class: "form-control" %>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Health Information -->
+          <div class="mb-4">
+            <h3 class="text-primary">Health Information</h3>
+            <div class="form-group">
+              <%= form.fields_for :healthinfo do |healthinfo_fields| %>
+              <label for="kkmember_disabilities">Disabilities:</label>
+              <%= healthinfo_fields.text_area :disabilities, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :healthinfo do |healthinfo_fields| %>
+              <label for="kkmember_medicalcondition">Medical Condition:</label>
+              <%= healthinfo_fields.text_field :medicalcondition, class:
+              "form-control" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-primary">Family Background</h3>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_father">Father's Name:</label>
+              <%= familybg_fields.text_field :father, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_fatherwork">Father's Work:</label>
+              <%= familybg_fields.text_field :fatherwork, class: "form-control"
+              %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_solofather">Solo Father:</label>
+              <%= familybg_fields.select :solofather,
+                  options_for_select(["Yes", "No"], @kkmember.familybg.solofather),
+                  {}, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_mother">Mother's Name:</label>
+              <%= familybg_fields.text_field :mother, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_motherwork">Mother's Work:</label>
+              <%= familybg_fields.text_field :motherwork, class: "form-control"
+              %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+                <label for="kkmember_solomother">Solo Mother:</label>
+                <%= familybg_fields.select :solomother,
+                  options_for_select(["Yes", "No"], @kkmember.familybg.solomother),
+                  {}, class: "form-control" %>
+              <% end %>
+
+            </div>
+            
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_familymemberno">No. of Family
+                Members:</label>
+              <%= familybg_fields.number_field :familymemberno, class:
+              "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_bother">Brother:</label>
+              <%= familybg_fields.number_field :bother, class: "form-control" %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.fields_for :familybg do |familybg_fields| %>
+              <label for="kkmember_sister">Sister:</label>
+              <%= familybg_fields.number_field :sister, class: "form-control" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 mb-5">
+              <%= form.submit "Update", class: "btn btn-primary btn-block" %>
+              <%= link_to "Cancel", kkmember_show_path, class:
+              "btn btn-danger btn-block mt-2" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

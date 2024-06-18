@@ -1,0 +1,2 @@
+class Educationbg < ApplicationRecord  
+end

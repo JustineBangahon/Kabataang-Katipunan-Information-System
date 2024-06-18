@@ -1,0 +1,416 @@
+<style>
+  .btn-round {
+    border-radius: 50px; /* Makes the button round */
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand text-success" href="/dashboard">KKRIS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item active">
+        <%= link_to "KK Members", kkmembers_path, class: "nav-link" %>
+      </li>
+    </ul>
+    <% if admin_logged_in? %>
+      <% admin = Admin.find_by(id: session[:admin_id]) %>
+      <% if admin %>
+        <span class="navbar-text mr-3">
+          Logged in as <%= admin.username %>
+        </span>
+        <%= form_with(url: logout_path, method: :delete, class: "form-inline") do |form| %>
+          <%= form.submit "Logout", class: "btn btn-outline-light bg-danger hover-light btn-round" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</nav>
+
+<div class="container custom-font">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <a href="<%= kkmembers_path %>" class="btn btn-danger btn-sm float-right">X</a>
+                    <h1 class="card-title mb-5 text-center ">Create New KK
+                        Member</h1>
+
+                        <%= form_with(url: add_kkmember_path, method: :post, authenticity_token: true) do |form| %>
+                        <%= csrf_meta_tags %>
+                        
+                            <div class="mb-4">
+                                <h3 class="text-primary">Personal Information</h3>
+                                <div class="form-group">
+                                    <label for="lastname">Last Name:</label>
+                                    <input type="text" id="lastname" name="kkmember[personalinfo_attributes][lastname]"
+                                        class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="firstname">First Name:</label>
+                                    <input type="text" id="firstname"
+                                        name="kkmember[personalinfo_attributes][firstname]" class="form-control"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="middlename">Middle Name:</label>
+                                    <input type="text" id="middlename"
+                                        name="kkmember[personalinfo_attributes][middlename]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age:</label>
+                                    <input type="number" id="age" name="kkmember[personalinfo_attributes][age]" class="form-control" min="14" required>
+                                  </div>
+                                  
+                                <div class="form-group">
+                                    <label for="sex">Sex:</label>
+                                    <select id="sex" name="kkmember[personalinfo_attributes][sex]" class="form-control"
+                                        required>
+                                        <option value="">--Select--</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                               <div class="form-group">
+                                    <label for="birthdate">Birthdate:</label>
+                                    <input type="date" id="birthdate" name="kkmember[personalinfo_attributes][birthdate]" class="form-control" required>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="civilstatus">Civil Status:</label>
+                                    <select type="text" id="civilstatus"
+                                        name="kkmember[personalinfo_attributes][civilstatus]" class="form-control"
+                                        required>
+                                        <option value="">--Select--</option>
+                                        <option value="single">Single</option>
+                                        <option value="maried">Maried</option>
+                                        <option value="widow">Widow</option>
+                                        <option value="widow">Divorce</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactno">Contact Number:</label>
+                                    <input type="tel" id="contactno" name="kkmember[personalinfo_attributes][contactno]"
+                                        class="form-control" minlength="11" maxlength="11">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailaddress">Email Address:</label>
+                                    <input type="email" id="emailaddress" name="kkmember[personalinfo_attributes][emailaddress]" class="form-control" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                                    
+                                </div>
+
+                                 <div class="form-group">
+                                <label for="purok">Purok:</label>
+                                <select id="purok" name="kkmember[personalinfo_attributes][purok]" class="form-control">
+                                    <option value="">--Select--</option>
+                                    <% @puroks.each do |purok| %>
+                                    <option value="<%= purok.purokname %>"><%= purok.purokname %></option>
+                                    <% end %>
+                                </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <input type="text" id="address" name="kkmember[personalinfo_attributes][address]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nationality">Nationality:</label>
+                                    <input type="text" id="nationality"
+                                        name="kkmember[personalinfo_attributes][nationality]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="registeredvoter">Registered
+                                        Voter:</label>
+                                    <select id="registeredvoter"
+                                        name="kkmember[personalinfo_attributes][registeredvoter]" class="form-control"
+                                        required>
+                                        <option value="">--Select--</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="organization">Organization (Optional)</label>
+                                    <input type="text" id="organization"
+                                        name="kkmember[personalinfo_attributes][organization]" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="mb-4">
+                                <h3 class="text-primary">Educational Background</h3>
+                                <div class="form-group">
+                                    <label for="hea">Highest Educational Attainment:</label>
+                                    <select id="hea"
+                                        name="kkmember[educationbg_attributes][hea]" class="form-control"
+                                        required>
+                                        <option value="">--Select--</option>
+                                        <option value="collegegraduate">College Graduate</option>
+                                        <option value="collegelevel">College Level</option>
+                                        <option value="seniorhighschoolgraduate">Senior High School Graduate</option>
+                                        <option value="serniorhighschoollevel">Senior High School Level</option>
+                                        <option value="highschoolgraduate">High School Graduate</option>
+                                        <option value="highschoollevel">High School Level</option>
+                                        <option value="elementarygraduate">Elementary Graduate</option>
+                                        <option value="elementarylevel">Elementary Level</option>
+                                        <option value="asl">Als</option>
+                                        <option value="vocational">Vocational</option>
+                                    </select>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="elementary">Elementary School:</label>
+                                    <input type="text" id="elementary"
+                                        name="kkmember[educationbg_attributes][elementary]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="highschool">High School:</label>
+                                    <input type="text" id="highschool"
+                                        name="kkmember[educationbg_attributes][highschool]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="college">College:</label>
+                                    <input type="text" id="college" name="kkmember[educationbg_attributes][college]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="course">Course:</label>
+                                    <input type="text" id="course" name="kkmember[educationbg_attributes][course]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="educationstatus">Education Status:</label>
+                                    <select id="educationstatus"
+                                        name="kkmember[educationbg_attributes][educationstatus]" class="form-control"
+                                        required>
+                                        <option value="">--Select--</option>
+                                        <option value="enrolled">Enrolled</option>
+                                        <option value="graduating">Graduating</option>
+                                        <option value="outofschool">Out of School</option>
+                                       
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ifoutofschool">If Out of School (Indicate the reason):</label>
+                                    <textarea id="ifoutofschool" name="kkmember[educationbg_attributes][ifoutofschool]"
+                                        class="form-control"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-4">
+                                <h3 class="text-primary">Work Background </h3>
+                                <div class="form-group">
+                                    <label for="work">Work (Optional)</label>
+                                    <input type="text" id="work" name="kkmember[workbg_attributes][work]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="agency">Agency (Optional)</label>
+                                    <input type="text" id="agency" name="kkmember[workbg_attributes][agency]"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h3 class="text-primary">Health Information</h3>
+                                <div class="form-group">
+                                    <label for="disabilities">Disabilities (Leave as blank if none)</label>
+                                    <input type="text" id="disabilities"
+                                        name="kkmember[healthinfo_attributes][disabilities]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="medicalcondition">Medical Condition:</label>
+                                    <input type="text" id="medicalcondition" name="kkmember[healthinfo_attributes][medicalcondition]" class="form-control" autocomplete="off">
+                                    <div id="medicalcondition_list"></div> <!-- Container for autocomplete options -->
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-4">
+                                <h3 class="text-primary">Family Background</h3>
+                                <div class="form-group">
+                                    <label for="father">Father's Name:</label>
+                                    <input type="text" id="father" name="kkmember[familybg_attributes][father]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fatherwork">Father's Work:</label>
+                                    <input type="text" id="fatherwork" name="kkmember[familybg_attributes][fatherwork]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="solofather">Solo Father:</label>
+                                    <select id="solofather" name="kkmember[familybg_attributes][solofather]"
+                                        class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mother">Mother's Name:</label>
+                                    <input type="text" id="mother" name="kkmember[familybg_attributes][mother]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="motherwork">Mother's Work:</label>
+                                    <input type="text" id="motherwork" name="kkmember[familybg_attributes][motherwork]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="solomother">Solo Mother:</label>
+                                    <select id="solomother" name="kkmember[familybg_attributes][solomother]"
+                                        class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="familymemberno">Number of Family Members:</label>
+                                    <input type="number" id="familymemberno"
+                                        name="kkmember[familybg_attributes][familymemberno]" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bother">Number of Brothers:</label>
+                                    <input type="number" id="bother" name="kkmember[familybg_attributes][bother]"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sister">Number of Sisters:</label>
+                                    <input type="number" id="sister" name="kkmember[familybg_attributes][sister]"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 mb-5">
+                                    <button type="submit" class="btn btn-primary btn-block">Create</button>
+                                    <a href="<%= kkmembers_path %>" class="btn btn-danger btn-block mt-2">Cancel</a>
+                                </div>
+                            </div>
+                            <script>
+                                // List of medical conditions
+                                const medicalConditions = [
+                                    "Good Condition",
+                                    "Diabetes",
+                                    "Hypertension",
+                                    "Asthma",
+                                    "Arthritis",
+                                    "Heart Disease",
+                                    "Cancer",
+                                    "Chronic Obstructive Pulmonary Disease (COPD)",
+                                    "Depression",
+                                    "Anxiety Disorders",
+                                    "Alzheimer's Disease",
+                                    "Stroke",
+                                    "Chronic Kidney Disease",
+                                    "Osteoporosis",
+                                    "Migraine",
+                                    "Fibromyalgia",
+                                    "Multiple Sclerosis (MS)",
+                                    "Chronic Fatigue Syndrome (CFS)",
+                                    "Irritable Bowel Syndrome (IBS)",
+                                    "Parkinson's Disease",
+                                    "Epilepsy",
+                                    "Acne",
+                                    "Allergies",
+                                    "Autoimmune Diseases",
+                                    "Back Pain",
+                                    "Bipolar Disorder",
+                                    "Celiac Disease",
+                                    "Chronic Pain",
+                                    "Cirrhosis",
+                                    "Cystic Fibrosis",
+                                    "Endometriosis",
+                                    "Fatty Liver Disease",
+                                    "Gastroesophageal Reflux Disease (GERD)",
+                                    "Glaucoma",
+                                    "Hepatitis",
+                                    "HIV/AIDS",
+                                    "Inflammatory Bowel Disease (IBD)",
+                                    "Insomnia",
+                                    "Lupus",
+                                    "Migraine",
+                                    "Obsessive-Compulsive Disorder (OCD)",
+                                    "Panic Disorder",
+                                    "Rheumatoid Arthritis",
+                                    "Schizophrenia",
+                                    "Sleep Apnea",
+                                    "Thyroid Disorders",
+                                    "Ulcerative Colitis",
+                                    "High Blood Pressure (Hypertension)",
+                                    "High Cholesterol",
+                                    "Dengue Fever",
+                                    "Typhoid Fever",
+                                    "Tuberculosis (TB)",
+                                    "Dengue Fever",
+                                    "Chikungunya Fever",
+                                    "Leptospirosis",
+                                    "Pneumonia",
+                                    "Dyslipidemia",
+                                    "Gout",
+                                    "Peptic Ulcer Disease",
+                                    "Kidney Stones",
+                                    "Gastritis",
+                                    "Hepatitis B",
+                                    "Hepatitis C",
+                                    "Polycystic Ovary Syndrome (PCOS)"
+                                ];
+
+                                // Function to update autocomplete options
+                                function updateAutocompleteOptions(inputValue) {
+                                    const filteredOptions = medicalConditions.filter(condition =>
+                                        condition.toLowerCase().includes(inputValue.toLowerCase())
+                                    );
+
+                                    const optionsContainer = document.getElementById("medicalcondition_list");
+                                    optionsContainer.innerHTML = "";
+
+                                    filteredOptions.forEach(option => {
+                                        const optionElement = document.createElement("div");
+                                        optionElement.textContent = option;
+                                        optionElement.classList.add("autocomplete-option");
+                                        optionElement.addEventListener("click", () => {
+                                            document.getElementById("medicalcondition").value = option;
+                                            optionsContainer.innerHTML = "";
+                                        });
+                                        optionsContainer.appendChild(optionElement);
+                                    });
+                                }
+
+                                // Event listener for input changes
+                                document.getElementById("medicalcondition").addEventListener("input", event => {
+                                    const inputValue = event.target.value;
+                                    updateAutocompleteOptions(inputValue);
+                                });
+
+                                // Hide options on outside click
+                                document.addEventListener("click", event => {
+                                    const optionsContainer = document.getElementById("medicalcondition_list");
+                                    if (!event.target.matches("#medicalcondition") && !event.target.matches(".autocomplete-option")) {
+                                        optionsContainer.innerHTML = "";
+                                    }
+                                });
+
+                                </script>
+                        <% end %>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,50 @@
+<style>
+  section {
+    background: #FFB75E;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ED8F03, #FFB75E);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ED8F03, #FFB75E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  }
+</style>
+
+<section>
+  <div class="container py-4 ">
+    <div class="row justify-content-center ">
+      <div class="col-lg-6 ">
+        <div class="card rounded-3 text-black">
+          <div class="card-body p-md-5 mx-md-4">
+            <div class="text-center">
+              <%= image_tag("kklogo.png", style: "width: 185px;", alt: "logo") %>
+              <h2 class="mt-1 mb-5 pb-1">Kabataang Katipunan</h2>
+            </div>
+            <div class="container">
+              <% flash.each do |type, msg| %>
+                <div class="flash-message flash-<%= type == 'notice' ? 'notice' : 'alert' %>" style="margin-bottom: 1rem; padding: 0.75rem; border-radius: 0.25rem; color: #fff; background-color: <%= type == 'notice' ? '#4caf50' : '#f44336' %>;">
+                  <%= msg %>
+                </div>
+              <% end %>
+            </div>
+            <form action="<%= login_path %>" method="post">
+              <p class="text-center"><strong>Please login to your account</strong></p>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="text" id="session_username" name="session[username]" class="form-control" placeholder="Enter Username" style="padding: 0.75rem; border: 1px solid #ccc; border-radius: 0.25rem;" />
+                <label class="form-label" for="session_username">Username</label>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="password" id="session_password" name="session[password]" class="form-control" placeholder="Enter Password" style="padding: 0.75rem; border: 1px solid #ccc; border-radius: 0.25rem;" />
+                <label class="form-label" for="session_password">Password</label>
+              </div>
+              <div class="text-center pt-1 pb-1">
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" style="padding: 0.75rem; border: none; border-radius: 0.25rem; background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593); color: #fff;">Log in</button>
+              </div>
+            </form> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

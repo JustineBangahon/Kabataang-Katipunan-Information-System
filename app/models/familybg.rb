@@ -1,0 +1,3 @@
+class Familybg < ApplicationRecord
+
+end

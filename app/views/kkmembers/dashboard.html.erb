@@ -1,0 +1,91 @@
+<style>
+  .btn-round {
+    border-radius: 50px; /* Makes the button round */
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand text-success" href="/dashboard">KKRIS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "KK Members", kkmembers_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Purok", purok_path, class: "nav-link" %>
+      </li>
+    </ul>
+    <% if admin_logged_in? %>
+      <% admin = Admin.find_by(id: session[:admin_id]) %>
+      <% if admin %>
+        <span class="navbar-text mr-3">
+          Logged in as <%= admin.username %>
+        </span>
+        <%= form_with(url: logout_path, method: :delete, class: "form-inline") do |form| %>
+          <%= form.submit "Logout", class: "btn btn-outline-light bg-danger hover-light btn-round" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</nav>
+
+<% flash.each do |type, msg| %>
+  <div class="flash-message flash-<%= type == 'notice' ? 'notice' : 'alert' %>" style="margin-bottom: 1rem; padding: 0.75rem; border-radius: 0.25rem; color: #fff; background-color: <%= type == 'notice' ? '#4caf50' : '#f44336' %>;">
+    <%= msg %>
+  </div>
+<% end %>
+
+<div class="container custom-font">
+  <h1 class="mt-4 mb-4 text-center">Dashboard</h1>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4 bg-success text-white">
+        <div class="card-body py-5 text-center">
+          <h5 class="card-title"><i class="fas fa-users"></i> KK Members</h5>
+          <p class="card-text"><%= @kkmembers_count %></p>
+           <!--<%= link_to "View", kkmembers_path, class: "btn btn-primary mt-2 btn-round" %>  -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4 bg-primary text-white">
+        <div class="card-body py-5 text-center">
+          <h5 class="card-title"><i class="fas fa-users"></i> Registered Voters</h5>
+          <p class="card-text"><%= @registered %></p>
+         <!--  <%= link_to "View", kkmembers_path, class: "btn btn-danger mt-2 btn-round" %>  -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4 bg-danger text-white">
+        <div class="card-body py-5 text-center">
+          <h5 class="card-title"><i class="fas fa-users"></i> Not Registered Voters</h5>
+          <p class="card-text"><%= @notregistered %></p>
+         <!-- <%= link_to "View", kkmembers_path, class: "btn btn-success mt-2 btn-round" %> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+  <% @puroks.each do |purok| %>
+    <div class="col-md-4">
+      <div class="card mb-4" style="background-color: #FBAB7E; background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
+        <div class="card-body py-5 text-center text-danger">
+          <h5 class="card-title">Purok <%= purok.purokname %>:</h5>
+          <p class="card-text">Population: <%= @purok_populations[purok.purokname][:population] %></p>
+          <p class="card-text">Registered: <%= @purok_populations[purok.purokname][:registered] %></p>
+          <p class="card-text">Not Registered: <%= @purok_populations[purok.purokname][:not_registered] %> </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>

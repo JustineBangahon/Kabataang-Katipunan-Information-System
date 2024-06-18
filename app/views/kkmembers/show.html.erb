@@ -1,0 +1,120 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand text-success" href="/dashboard">KKRIS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item active">
+        <%= link_to "KK Members", kkmembers_path, class: "nav-link" %>
+      </li>
+    </ul>
+    <% if admin_logged_in? %>
+  <% admin = Admin.find_by(id: session[:admin_id]) %>
+  <% if admin %>
+    <span class="navbar-text mr-3">
+      Logged in as <%= admin.username %>
+    </span>
+    <%= form_with(url: logout_path, method: :delete, class: "form-inline") do |form| %>
+      <%= form.submit "Logout", class: "btn btn-outline-light bg-danger hover-light" %>
+    <% end %>
+  <% end %>
+<% end %>
+  </div>
+</nav>
+ 
+<div class="container custom-font">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card mt-5">
+        <div class="card-body">
+          <a href="/kkmembers" class="btn btn-danger btn-sm custom-btn float-right">X</a>
+          <h1 class="card-title mb-5 text-center">KK Member Details</h1>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-primary mb-3">Personal Information</h3>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Last Name:</strong> <%= @kkmember.personalinfo.lastname %></li>
+                <li class="list-group-item"><strong>First Name:</strong> <%= @kkmember.personalinfo.firstname %></li>
+                <li class="list-group-item"><strong>Middle Name:</strong> <%= @kkmember.personalinfo.middlename %></li>
+                <li class="list-group-item"><strong>Age:</strong> <%= @kkmember.personalinfo.age %></li>
+                <li class="list-group-item"><strong>Sex:</strong> <%= @kkmember.personalinfo.sex %></li>
+                <li class="list-group-item"><strong>Registered Voters:</strong> <%= @kkmember.personalinfo.registeredvoter %></li>
+                <li class="list-group-item"><strong>Purok:</strong> <%= @kkmember.personalinfo.purok %></li>
+                <li class="list-group-item"><strong>Birthdate:</strong> <%= @kkmember.personalinfo.birthdate %></li>
+                <li class="list-group-item"><strong>Civil Status:</strong> <%= @kkmember.personalinfo.civilstatus %></li>
+                <li class="list-group-item"><strong>Contact Number:</strong> <%= @kkmember.personalinfo.contactno %></li>
+                <li class="list-group-item"><strong>Email Address:</strong> <%= @kkmember.personalinfo.emailaddress %></li>
+                <li class="list-group-item"><strong>Address:</strong> <%= @kkmember.personalinfo.address %></li>
+                <li class="list-group-item"><strong>Nationality:</strong> <%= @kkmember.personalinfo.nationality %></li>
+                <li class="list-group-item"><strong>Organization:</strong> <%= @kkmember.personalinfo.organization %></li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h3 class="text-primary mb-3">Educational Background</h3>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>HEA:</strong> <%= @kkmember.educationbg.hea %></li>
+                <li class="list-group-item"><strong>Elementary:</strong> <%= @kkmember.educationbg.elementary %></li>
+                <li class="list-group-item"><strong>Highschool:</strong> <%= @kkmember.educationbg.highschool %></li>
+                <li class="list-group-item"><strong>College:</strong> <%= @kkmember.educationbg.college %></li>
+                <li class="list-group-item"><strong>Course:</strong> <%= @kkmember.educationbg.course %></li>
+                <li class="list-group-item"><strong>Educ. Status:</strong> <%= @kkmember.educationbg.educationstatus %></li>
+                <li class="list-group-item"><strong>If Out of School:</strong> <%= @kkmember.educationbg.ifoutofschool %></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <h3 class="text-primary mb-3">Work Background</h3>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Work:</strong> <%= @kkmember.workbg.work %></li>
+              </ul>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Agency:</strong> <%= @kkmember.workbg.agency %></li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h3 class="text-primary mb-3">Health Information</h3>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Disabilities:</strong> <%= @kkmember.healthinfo.disabilities %></li>
+                <li class="list-group-item"><strong>Medical Condition:</strong> <%= @kkmember.healthinfo.medicalcondition %></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <h3 class="text-primary mb-3">Family Background</h3>
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Father's Name:</strong> <%= @kkmember.familybg.father %></li>
+                <li class="list-group-item"><strong>Father's Work:</strong> <%= @kkmember.familybg.fatherwork %></li>
+                <li class="list-group-item"><strong>Solo Father:</strong> <%= @kkmember.familybg.solofather %></li>
+                <li class="list-group-item"><strong>Mother's Name:</strong> <%= @kkmember.familybg.mother %></li>
+                <li class="list-group-item"><strong>Mother's Work:</strong> <%= @kkmember.familybg.motherwork %></li>
+                <li class="list-group-item"><strong>Solo Mother:</strong> <%= @kkmember.familybg.solomother %></li>
+                <li class="list-group-item"><strong>No. of Family Members:</strong> <%= @kkmember.familybg.familymemberno %></li>
+                <li class="list-group-item"><strong>Brother:</strong> <%= @kkmember.familybg.bother %></li>
+                <li class="list-group-item"><strong>Sister:</strong> <%= @kkmember.familybg.sister %></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-12 text-right">
+              <%= link_to "Edit", edit_kkmember_path(@kkmember), class: "btn btn-primary" %>
+              <%= form_tag destroy_kkmember_path(@kkmember), method: :delete do %>
+                <%= submit_tag "Delete", class: "btn btn-danger ml-2" %>
+              <% end %>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
